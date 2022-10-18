@@ -11,30 +11,23 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--vram", "128"]
   end
 
-  config.vm.synced_folder ".", "/home/vagrant/Desktop/badass", type: "virtualbox"
+  config.vm.synced_folder ".", "/home/vagrant/Desktop/pdf_files", type: "virtualbox"
   config.vm.provision "shell", name: "Setting up VM", privileged: false,  inline: <<-SHELL
     set -ex
-    sudo add-apt-repository -y ppa:gns3/ppa
     sudo apt-get update
     DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends gdm3 ubuntu-desktop-minimal
     echo "display manager and desktop installed."
     
+    sudo apt-get install -y diffpdf
 
-    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'org.gnome.Terminal.desktop']"
-    echo "gns3, wireskark and terminal added to favorites."
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'org.gnome.Terminal.desktop', 'diffpdf.desktop']"
+    echo "terminal and diffpdf added to favorites."
   SHELL
 
   config.vm.provision :reload
 
-  config.vm.provision "shell", name: "Setting up badass", privileged: false,  inline: <<-SHELL
-    cd ~/Desktop/badass/requirements
-    sudo docker build -f ./Dockerfile.router -t badass.router ./
-    sudo docker pull alpine:3.16
-
-    # old one
-    # sudo docker build -f ./Dockerfile.router -t routeur_niduches ./
-    # docker pull alpine
-    # docker tag alpine:3.16 host_niduches
+  config.vm.provision "shell", name: "Setting up ", privileged: false,  inline: <<-SHELL
+    echo ok
   SHELL
 
 end
