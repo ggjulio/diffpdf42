@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", name: "Setting up VM", privileged: false,  inline: <<-SHELL
     set -ex
     sudo apt-get update
-    DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends gdm3 ubuntu-desktop-minimal
+    DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends ubuntu-desktop-minimal
     echo "display manager and desktop installed."
     
     sudo apt-get install -y diffpdf
